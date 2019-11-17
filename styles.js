@@ -1,35 +1,56 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-    buttonContainer: {
-      flexDirection: 'row',
-      alignItems: 'stretch',
-      marginTop: 15,
-    },
-    button: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: '#eee',
-      padding: 10,
-    },
-    middleButton: {
-      borderLeftWidth: 1,
-      borderRightWidth: 1,
-      borderColor: '#ccc',
-    },
-    sensor: {
-      marginTop: 45,
-      paddingHorizontal: 10,
-      backgroundColor: '#8FD5A6',
-    },
-    text:{
-      textAlign: 'center'
-    },
-    title:{
-      textAlign: 'center',
-      fontSize: 20
-    }
-  });
+  buttonContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  button: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#eee',
+    padding: 10,
+  },
+  sensor: {
+    flex: 1,
+    paddingHorizontal: 10,
+    backgroundColor: '#8FD5A6',
+  },
+  text: {
+    textAlign: 'center',
+  },
+  buttonText: {
+    textAlign: 'center',
+    marginTop: 30,
+    fontSize: 20,
+    fontStyle: 'italic',
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  em: {
+    textAlign: 'center',
+    fontSize: 20,
+    fontStyle: 'italic',
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  title: {
+    marginTop: 45,
+    textAlign: 'center',
+    fontSize: 45,
+    fontStyle: 'italic',
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  myButton: {
+    padding: 5,
+    height: 200,
+    width: 200,
+    borderRadius: 400,
+    backgroundColor: '#E5C2C0',
+  }
+});
 
 export { styles }

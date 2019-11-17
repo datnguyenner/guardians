@@ -10,7 +10,8 @@ export default class AccelerometerSensor extends React.Component {
   state = {
     accelerometerData: {},
     appState: AppState.currentState,
-    isCrash: false
+    isCrash: false,
+    alertSent: false
   };
 
   componentDidMount() {
@@ -23,12 +24,13 @@ export default class AccelerometerSensor extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    
-      const crashBound = 1.7;
-      let { x, y, z } = this.state.accelerometerData;
-      if(round(x) > crashBound || round(y) > crashBound || round(z) > crashBound) {
-        this.setState({isCrash: true});
-      }
+
+    const crashBound = 3;
+    let { x, y, z } = this.state.accelerometerData;
+    let isCrash = this.state.isCrash;
+    if ((round(x) > crashBound || round(y) > crashBound || round(z) > crashBound) && isCrash===false) {
+      this.setState({ isCrash: true });
+    }
 
   }
 
@@ -41,20 +43,25 @@ export default class AccelerometerSensor extends React.Component {
   };
 
   _sendAlert = () => {
-    /*fetch('https://guardians-app.herokuapp.com/users', {
+    /*fetch('https://guardians-app.herokuapp.com/notify_contacts', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        email: 'dat.nguyen.win@gmail.com',
+        token: token,
       }),
-    });*/
+    }).then(response => console.log(response));*/
+    console.log('Alert Sent');
+  };
+
+  _toggleAlert = () => {
+    this.setState({ isCrash: false, alertSent: false });
   };
 
   _slow = () => {
-    Accelerometer.setUpdateInterval(500);
+    Accelerometer.setUpdateInterval(100);
   };
 
   _fast = () => {
@@ -72,9 +79,28 @@ export default class AccelerometerSensor extends React.Component {
     this._subscription = null;
   };
 
+  _renderAlert = () => {
+    if (this.state.isCrash) {
+      
+      if(this.state.alertSent===false){
+        this._sendAlert();
+        this.setState({alertSent: true});
+      }
+      
+      return (
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.myButton} onPress={this._toggleAlert}>
+            <Text style={styles.buttonText}>Are you safe?</Text>
+          </TouchableOpacity>
+        </View>
+      );
+    } else {
+      return null;
+    }
+  }
+
   render() {
     let { x, y, z } = this.state.accelerometerData;
-
     return (
       <View style={styles.sensor}>
         <Text style={styles.title}>Guardians</Text>
@@ -82,22 +108,8 @@ export default class AccelerometerSensor extends React.Component {
         <Text style={styles.text}>
           x: {round(x)} y: {round(y)} z: {round(z)}
         </Text>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity onPress={this._toggle} style={styles.button}>
-            <Text>Toggle</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={this._slow} style={[styles.button, styles.middleButton]}>
-            <Text>Slow</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={this._fast} style={styles.button}>
-            <Text>Fast</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity onPress={this._sendAlert} style={styles.button}>
-            <Text>Send Alert</Text>
-          </TouchableOpacity>
-        </View>
+        <Text style={styles.em}>Emergency Contacts: </Text>
+        {this._renderAlert()}
       </View>
     );
   }
@@ -109,5 +121,5 @@ function round(n) {
     return 0;
   }
 
-  return Math.floor(n * 100) / 100;
+  return Math.abs(Math.floor(n * 100) / 100);
 }
