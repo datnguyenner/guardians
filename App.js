@@ -43,7 +43,7 @@ export default class AccelerometerSensor extends React.Component {
   };
 
   _sendAlert = () => {
-    /*fetch('https://guardians-app.herokuapp.com/notify_contacts', {
+    fetch('https://guardians-app.herokuapp.com/notify_contacts', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -52,7 +52,7 @@ export default class AccelerometerSensor extends React.Component {
       body: JSON.stringify({
         token: token,
       }),
-    }).then(response => console.log(response));*/
+    }).then(response => console.log(response));
     console.log('Alert Sent');
   };
 
@@ -114,7 +114,6 @@ export default class AccelerometerSensor extends React.Component {
     );
   }
 }
-
 
 function round(n) {
   if (!n) {

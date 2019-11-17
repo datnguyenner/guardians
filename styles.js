@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   em: {
+    marginTop: 30,
     textAlign: 'center',
     fontSize: 20,
     fontStyle: 'italic',
@@ -37,7 +38,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   title: {
-    marginTop: 45,
+    marginTop: 60,
     textAlign: 'center',
     fontSize: 45,
     fontStyle: 'italic',
